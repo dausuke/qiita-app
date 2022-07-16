@@ -1,17 +1,16 @@
 import emotionReset from 'emotion-reset';
 import {Global, css} from '@emotion/react';
-import {Routes, Route, Link} from 'react-router-dom';
-import V1 from './pages/v1';
-import V2 from './pages/V2';
+import {Outlet} from 'react-router-dom';
+import Header from './main/components/Header';
 
 function App() {
   return (
     <>
       <Global styles={globalStyle} />
-      <Routes>
-        <Route path="v1" element={<V1 />} />
-        <Route path="v2" element={<V2 />} />
-      </Routes>
+      <div css={container}>
+        <Header />
+        <Outlet />
+      </div>
     </>
   );
 }
@@ -25,4 +24,16 @@ const globalStyle = css`
     -moz-osx-font-smoothing: grayscale;
     -webkit-font-smoothing: antialiased;
   }
+  body {
+    background-color: #f5f6f6;
+  }
+  a {
+    color: #000000;
+    text-decoration: none;
+  }
+`;
+
+const container = css`
+  max-width: 1080px;
+  margin: 0 auto;
 `;
