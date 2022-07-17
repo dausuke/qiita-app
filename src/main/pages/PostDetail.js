@@ -1,6 +1,6 @@
 import {useState, useEffect} from 'react';
 import {css} from '@emotion/react';
-import {Box, Title} from '../components/atoms/';
+import {Box, Title, Text} from '../components/atoms/';
 import axios from 'axios';
 import {useParams} from 'react-router-dom';
 import Tag from '../components/posts/Tag';
@@ -38,9 +38,20 @@ const PostDetail = () => {
     <Box col>
       <Box col css={contaienr}>
         <Box col css={header}>
-          <Title size="lg">{item?.title}</Title>
-          <a href={item?.url} target="_blank" rel="noopener noreferrer">
-            {item?.url}
+          <Box css={userWrap}>
+            <img
+              css={avator}
+              src={item?.user.profile_image_url}
+              alt="user_img"
+            />
+            <Text css={user}>@{item?.user.id}</Text>
+          </Box>
+          <a
+            css={linkText}
+            href={item?.url}
+            target="_blank"
+            rel="noopener noreferrer">
+            <Title size="lg">{item?.title}</Title>
           </a>
           <Box css={tagWrapper}>
             {item?.tags.map((tag, index) => (
@@ -70,6 +81,29 @@ const contaienr = css`
 
 const header = css`
   margin-bottom: 40px;
+`;
+
+const userWrap = css`
+  align-items: center;
+  column-gap: 8px;
+`;
+
+const user = css`
+  color: #7a7a7a;
+`;
+
+const avator = css`
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+`;
+
+const linkText = css`
+  transition: 0.2s;
+
+  :hover {
+    opacity: 0.5;
+  }
 `;
 
 const tagWrapper = css`

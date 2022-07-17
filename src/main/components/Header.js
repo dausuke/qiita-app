@@ -20,6 +20,7 @@ const header = css`
   background-color: #55c500;
   position: fixed;
   left: 0;
+  z-index: 9999;
 `;
 
 const contaienr = css`
@@ -33,4 +34,3 @@ const contaienr = css`
 const logo = css`
   color: #fff;
 `;
-
