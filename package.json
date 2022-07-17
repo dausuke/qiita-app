@@ -2,7 +2,7 @@
   "name": "qiita-app",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://github.com/dausuke/qiita-app",
+  "homepage": "https://dausuke.github.io/qiita-app",
   "dependencies": {
     "@craco/craco": "^6.4.5",
     "@emotion/react": "^11.9.3",
