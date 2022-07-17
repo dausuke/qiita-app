@@ -4,7 +4,7 @@ export const markdownStyle = css`
   div {
     line-height: 150%;
   }
-  
+
   a {
     color: #0645ad;
     text-decoration: none;
@@ -77,11 +77,11 @@ export const markdownStyle = css`
   }
 
   h1 {
-    font-size: 2.5em;
+    font-size: 2em;
   }
 
   h2 {
-    font-size: 2em;
+    font-size: 1.75em;
   }
 
   h3 {
@@ -103,7 +103,7 @@ export const markdownStyle = css`
   blockquote {
     color: #666666;
     margin: 0;
-    padding-left: 3em;
+    padding-left: 2em;
     border-left: 0.5em #eee solid;
   }
 
