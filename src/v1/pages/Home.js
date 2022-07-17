@@ -35,6 +35,7 @@ const Home = () => {
 
   useEffect(() => {
     fetchPosts();
+    console.log(process.env.REACT_APP_QIITA_KEY)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page, query]);
 
