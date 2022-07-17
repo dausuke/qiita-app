@@ -1,16 +1,14 @@
 import {css} from '@emotion/react';
 
 const Box = props => {
-  const direction = props.col ? 'column' : 'row';
-  const wrap = props.wrap ? 'wrap' : 'nowrap';
+  const {col, wrap, ...styleProps} = props;
+  const direction = col ? 'column' : 'row';
+  const flexWrap = wrap ? 'wrap' : 'nowrap';
 
   return (
     <div
-      css={[
-        container,
-        props.style,
-        {flexDirection: direction, flexWrap: wrap},
-      ]}>
+      css={[container, {flexDirection: direction, flexWrap: flexWrap}]}
+      {...styleProps}>
       {props.children}
     </div>
   );

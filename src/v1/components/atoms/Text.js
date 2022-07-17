@@ -1,13 +1,9 @@
 import {css} from '@emotion/react';
 
 const Text = props => {
+  const {fontSize, ...styleProps} = props;
   return (
-    <p
-      css={[
-        text,
-        props.style,
-        {fontSize: props.fontSize ? props.fontSize : 16},
-      ]}>
+    <p css={[text, {fontSize: fontSize ? fontSize : 16}]} {...styleProps}>
       {props.children}
     </p>
   );

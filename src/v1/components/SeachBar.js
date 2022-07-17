@@ -1,42 +1,36 @@
 import {useState} from 'react';
 import {css} from '@emotion/react';
+import {Box, TextInput} from './atoms';
 
-const SearchBar = (props) => {
-  const [value, setValue] = useState('');
+const SearchBar = props => {
+  const [inputValue, setInputValue] = useState('');
 
   const handelValueCange = text => {
-    setValue(text);
+    setInputValue(text);
   };
 
   const onEnterPress = e => {
     if (e.key === 'Enter') {
       e.preventDefault();
-      props.onSubmit(value);
+      props.onEnterPress(inputValue);
     }
   };
 
   return (
-    <input
-      css={input}
-      type="text"
-      value={value}
-      placeholder="記事を検索"
-      onChange={event => handelValueCange(event.target.value)}
-      onKeyPress={onEnterPress}
-    />
+    <Box css={contaienr}>
+      <TextInput
+        placeholder="記事を検索"
+        value={inputValue}
+        onChange={event => handelValueCange(event.target.value)}
+        onKeyPress={onEnterPress}
+      />
+    </Box>
   );
 };
 
 export default SearchBar;
 
-const input = css`
-  padding: 4px 16px;
-  margin-top: 4px;
-  height: 40px;
-  width: 250px;
-  border: none;
-  border-radius: 30px;
-  &:focus {
-    outline: none;
-  }
+const contaienr = css`
+  column-gap: 16px;
+  align-items: center;
 `;

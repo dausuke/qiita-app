@@ -9,14 +9,14 @@ const PostItem = props => {
   
   return (
     <Link to={`/post/${post.id}`}>
-      <Box style={[contaienr, {marginBottom: props.margin}]} col>
+      <Box css={[contaienr, {marginBottom: props.margin}]} col>
         <Title>{post.title}</Title>
-        <Box style={dateWrapper}>
-          <Text fontSize={12} style={dateText}>
+        <Box css={dateWrapper}>
+          <Text fontSize={12} css={dateText}>
             {dayjs(post.created_at).format('YYYY年MM月DD日 HH:mm:ss')}
           </Text>
         </Box>
-        <Box style={tagWrapper}>
+        <Box css={tagWrapper}>
           {post.tags.map((tag, index) => (
             <Tag key={index} tag={tag} />
           ))}

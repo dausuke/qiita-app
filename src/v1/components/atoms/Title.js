@@ -1,17 +1,12 @@
 import {css} from '@emotion/react';
 
 const Title = props => {
+  const {size, ...styleProps} = props;
   const fontSize =
-    props.size === 'lg'
-      ? 40
-      : props.size === 'md'
-      ? 32
-      : props.size === 'sm'
-      ? 24
-      : 20;
+    size === 'lg' ? 40 : size === 'md' ? 32 : size === 'sm' ? 24 : 20;
 
   return (
-    <span css={[text, props.style, {fontSize: fontSize}]}>
+    <span css={[text, {fontSize: fontSize}]} {...styleProps}>
       {props.children}
     </span>
   );

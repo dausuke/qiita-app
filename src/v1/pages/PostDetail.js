@@ -1,14 +1,16 @@
 import {useState, useEffect} from 'react';
 import {css} from '@emotion/react';
-import {Box, Title, Text} from '../components/atoms/';
+import {Box, Title, Text} from '../components/atoms';
 import axios from 'axios';
 import {useParams} from 'react-router-dom';
 import Tag from '../components/posts/Tag';
+import ReactMarkdown from 'react-markdown';
+import CodeBlock from '../components/posts/CodeBlock';
+import {markdownStyle} from '../assets/markdown';
 
 const PostDetail = () => {
   const {postId} = useParams();
   const [item, setItem] = useState();
-  const [postBody, setPostBody] = useState('');
 
   const fetchPostDetail = async () => {
     try {
@@ -21,10 +23,7 @@ const PostDetail = () => {
         {headers},
       );
 
-      const {rendered_body, ...data} = response.data;
-      setItem(data);
-      // const body = JSON.parse(rendered_body);
-      setPostBody(rendered_body);
+      setItem(response.data);
     } catch (e) {
       console.log(e);
     }
@@ -37,16 +36,36 @@ const PostDetail = () => {
 
   return (
     <Box col>
-      <Box col style={contaienr}>
-        <Box col style={header}>
-          <Title>{item?.title}</Title>
-          <Box style={tagWrapper}>
+      <Box col css={contaienr}>
+        <Box col css={header}>
+          <Box css={userWrap}>
+            <img
+              css={avator}
+              src={item?.user.profile_image_url}
+              alt="user_img"
+            />
+            <Text css={user}>@{item?.user.id}</Text>
+          </Box>
+          <a
+            css={linkText}
+            href={item?.url}
+            target="_blank"
+            rel="noopener noreferrer">
+            <Title size="lg">{item?.title}</Title>
+          </a>
+          <Box css={tagWrapper}>
             {item?.tags.map((tag, index) => (
               <Tag key={index} tag={tag} />
             ))}
           </Box>
         </Box>
-        {postBody}
+        <div css={markdownStyle}>
+          <ReactMarkdown
+            components={{code: CodeBlock}}
+            className="markdown-style">
+            {item?.body}
+          </ReactMarkdown>
+        </div>
       </Box>
     </Box>
   );
@@ -55,13 +74,36 @@ const PostDetail = () => {
 export default PostDetail;
 
 const contaienr = css`
-  margin-top: 120px;
+  margin: 120px 0 80px;
   padding: 40px 24px;
   background-color: #ffffff;
 `;
 
 const header = css`
   margin-bottom: 40px;
+`;
+
+const userWrap = css`
+  align-items: center;
+  column-gap: 8px;
+`;
+
+const user = css`
+  color: #7a7a7a;
+`;
+
+const avator = css`
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+`;
+
+const linkText = css`
+  transition: 0.2s;
+
+  :hover {
+    opacity: 0.5;
+  }
 `;
 
 const tagWrapper = css`

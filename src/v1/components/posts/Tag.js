@@ -3,8 +3,8 @@ import {Box, Text} from '../atoms';
 
 const Tag = ({tag}) => {
   return (
-    <Box style={tagItem}>
-      <Text style={tagText} fontSize={12}>
+    <Box css={tagItem}>
+      <Text css={tagText} fontSize={12}>
         {tag.name}
       </Text>
     </Box>

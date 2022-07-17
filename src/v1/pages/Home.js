@@ -3,51 +3,30 @@ import {css} from '@emotion/react';
 import {Box, Title} from '../components/atoms';
 import axios from 'axios';
 import PostItem from '../components/posts/PostItem';
-
-const data = {
-  coediting: false,
-  comments_count: 0,
-  created_at: '2022-07-15T19:42:32+09:00',
-  group: null,
-  id: 'a6c9a7508fac421b077f',
-  likes_count: 0,
-  page_views_count: null,
-  private: false,
-  reactions_count: 0,
-  tags: [
-    {
-      name: 'Excel',
-    },
-    {
-      name: '条件付き書式',
-    },
-  ],
-  team_membership: null,
-  title:
-    'Excelで、テーブルとして書式設定したくないけど１行おきに色を付けたい場合の条件付き書式',
-  updated_at: '2022-07-15T19:42:32+09:00',
-  url: 'https://qiita.com/kameshika/items/a6c9a7508fac421b077f',
-};
+import SearchBar from '../components/SeachBar';
+import Pagination from '../components/Pagination';
 
 const Home = () => {
-  const [posts, setPosts] = useState(Array(20).fill(data));
+  const [posts, setPosts] = useState([]);
+  const [page, setPage] = useState(1);
+  const [query, setQuery] = useState();
 
-  const fetchPosts = async query => {
+  const fetchPosts = async () => {
     try {
       const params = {
-        page: '1',
-        per_page: '25',
+        per_page: '20',
+        page,
         query,
       };
       const headers = {
-          Authorization: `Bearer ${process.env.REACT_APP_QIITA_KEY}`,
+        Authorization: `Bearer ${process.env.REACT_APP_QIITA_KEY}`,
       };
 
       const response = await axios.get('https://qiita.com/api/v2/items', {
         headers,
         params,
       });
-      console.log(response);
+
       setPosts(response.data);
     } catch (e) {
       console.log(e);
@@ -55,17 +34,41 @@ const Home = () => {
   };
 
   useEffect(() => {
-    // fetchPosts();
+    fetchPosts();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [page, query]);
+
+  useEffect(() => {
+    fetchPosts();
   }, []);
 
   return (
     <Box col>
-      <Box style={contaienr} col>
-        <Title size="sm">記事一覧</Title>
-        <Box style={postWrapper} col>
+      <Box css={contaienr} col>
+        <Box css={header}>
+          <Title size="sm">記事一覧</Title>
+          <Box css={searchWrap}>
+            <SearchBar onEnterPress={value => setQuery(value)} />
+            <Pagination
+              currentPage={page}
+              onNext={() => setPage(page => page + 1)}
+              onPrevious={() => setPage(page => page - 1)}
+              onPagePress={page => setPage(page)}
+            />
+          </Box>
+        </Box>
+        <Box css={postWrapper} col>
           {posts.map((post, index) => (
             <PostItem post={post} key={index} margin={32} />
           ))}
+        </Box>
+        <Box css={footer}>
+          <Pagination
+            currentPage={page}
+            onNext={() => setPage(page => page + 1)}
+            onPrevious={() => setPage(page => page - 1)}
+            onPagePress={page => setPage(page)}
+          />
         </Box>
       </Box>
     </Box>
@@ -75,9 +78,23 @@ const Home = () => {
 export default Home;
 
 const contaienr = css`
-  padding-top: 120px;
+  padding: 120px 0 80px;
+`;
+
+const header = css`
+  column-gap: 40px;
+  align-items: center;
+`;
+
+const searchWrap = css`
+  flex: 1;
+  justify-content: space-between;
 `;
 
 const postWrapper = css`
   margin-top: 40px;
+`;
+
+const footer = css`
+  justify-content: center;
 `;
