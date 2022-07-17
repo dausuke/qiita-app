@@ -8,7 +8,7 @@ const PostItem = props => {
   const {post} = props;
   
   return (
-    <Link to={`/v1/post/${post.id}`}>
+    <Link to={`post/${post.id}`}>
       <Box css={[contaienr, {marginBottom: props.margin}]} col>
         <Title>{post.title}</Title>
         <Box css={dateWrapper}>

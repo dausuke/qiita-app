@@ -8,8 +8,8 @@ const Router = () => {
     <BrowserRouter>
       <Routes>
         <Route path='/qiita-app' element={<App />}>
-          <Route path="/v1" element={<Home />} />
-          <Route path="/v1/post/:postId" element={<PostDetail />} />
+          <Route path="v1" element={<Home />} />
+          <Route path="v1/post/:postId" element={<PostDetail />} />
         </Route>
       </Routes>
     </BrowserRouter>
