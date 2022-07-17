@@ -5,9 +5,9 @@ import App from './App';
 
 const Router = () => {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename={process.env.PUBLIC_URL}>
       <Routes>
-        <Route path='/qiita-app' element={<App />}>
+        <Route path='/' element={<App />}>
           <Route path="v1" element={<Home />} />
           <Route path="v1/post/:postId" element={<PostDetail />} />
         </Route>
