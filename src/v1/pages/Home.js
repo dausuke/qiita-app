@@ -38,10 +38,6 @@ const Home = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page, query]);
 
-  useEffect(() => {
-    fetchPosts();
-  }, []);
-
   return (
     <Box col>
       <Box css={contaienr} col>
