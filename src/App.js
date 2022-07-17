@@ -1,7 +1,7 @@
 import emotionReset from 'emotion-reset';
 import {Global, css} from '@emotion/react';
 import {Outlet} from 'react-router-dom';
-import Header from './main/components/Header';
+import Header from './v1/components/Header';
 
 function App() {
   return (
