@@ -1,6 +1,6 @@
 import {useState} from 'react';
 import {css} from '@emotion/react';
-import {Box, TextInput} from './atoms';
+import {Box, TextInput} from '../atoms';
 
 const SearchBar = props => {
   const [inputValue, setInputValue] = useState('');
@@ -9,7 +9,7 @@ const SearchBar = props => {
     setInputValue(text);
   };
 
-  const onEnterPress = e => {
+  const handleKeyPress = e => {
     if (e.key === 'Enter') {
       e.preventDefault();
       props.onEnterPress(inputValue);
@@ -22,7 +22,7 @@ const SearchBar = props => {
         placeholder="記事を検索"
         value={inputValue}
         onChange={event => handelValueCange(event.target.value)}
-        onKeyPress={onEnterPress}
+        onKeyPress={handleKeyPress}
       />
     </Box>
   );

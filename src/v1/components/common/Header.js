@@ -1,7 +1,7 @@
 import {css} from '@emotion/react';
-import {Box, Title} from './atoms';
+import {Box, Title} from '../atoms';
 
-const Header = props => {
+const Header = () => {
   return (
     <header css={header}>
       <Box css={contaienr}>

@@ -1,6 +1,6 @@
 /* eslint-disable array-callback-return */
 import {useState, useMemo, useEffect} from 'react';
-import {Box, Text} from './atoms';
+import {Box, Text} from '../atoms';
 import {css} from '@emotion/react';
 
 const Pagination = props => {

@@ -3,8 +3,8 @@ import {css} from '@emotion/react';
 import {Box, Title} from '../components/atoms';
 import axios from 'axios';
 import PostItem from '../components/posts/PostItem';
-import SearchBar from '../components/SeachBar';
-import Pagination from '../components/Pagination';
+import SearchBar from '../components/common/SeachBar';
+import Pagination from '../components/common/Pagination';
 
 const Home = () => {
   const [posts, setPosts] = useState([]);
@@ -35,7 +35,6 @@ const Home = () => {
 
   useEffect(() => {
     fetchPosts();
-    console.log(process.env.REACT_APP_QIITA_KEY)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page, query]);
 

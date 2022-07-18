@@ -1,13 +1,10 @@
 import {css} from '@emotion/react';
 
-const Text = props => {
-  const {fontSize, ...styleProps} = props;
-  return (
-    <p css={[text, {fontSize: fontSize ? fontSize : 16}]} {...styleProps}>
-      {props.children}
-    </p>
-  );
-};
+const Text = ({fontSize = 16, children, ...props}) => (
+  <p css={[text, {fontSize}]} {...props}>
+    {children}
+  </p>
+);
 
 export default Text;
 

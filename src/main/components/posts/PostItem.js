@@ -12,7 +12,7 @@ const PostItem = props => {
       <Box css={[contaienr, {marginBottom: props.margin}]} col>
         <Title>{post.title}</Title>
         <Box css={dateWrapper}>
-          <Text fontSize={12} css={dateText}>
+          <Text size={12} css={dateText}>
             {dayjs(post.created_at).format('YYYY年MM月DD日 HH:mm:ss')}
           </Text>
         </Box>
