@@ -1,7 +1,7 @@
 import {BrowserRouter, Routes, Route} from 'react-router-dom';
-import Base from './v1/components/layouts/Base';
-import HomeV1 from './v1/pages/Home';
-import PostDetailV1 from './v1/pages/PostDetail';
+import Base from './components/layouts/Base';
+import Home from './pages/Home';
+import PostDetail from './pages/PostDetail';
 
 
 const Router = () => {
@@ -9,8 +9,8 @@ const Router = () => {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Base />}>
-          <Route index element={<HomeV1 />} />
-          <Route path="post/:postId" element={<PostDetailV1 />} />
+          <Route index element={<Home />} />
+          <Route path="post/:postId" element={<PostDetail />} />
         </Route>
       </Routes>
     </BrowserRouter>
