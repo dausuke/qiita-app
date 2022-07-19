@@ -1,5 +1,5 @@
 /* eslint-disable array-callback-return */
-import {useState, useMemo, useEffect} from 'react';
+import {useState, useEffect} from 'react';
 import {Box, Text} from '../atoms';
 import {css} from '@emotion/react';
 
@@ -7,15 +7,8 @@ const Pagination = props => {
   const {range = 5, currentPage, onNext, onPrevious, onPagePress} = props;
   const [pages, setPages] = useState([]);
 
-  const isRangeLast = useMemo(
-    () => currentPage === pages[pages.length - 1],
-    [currentPage, pages],
-  );
-
-  const isRangePrevious = useMemo(
-    () => currentPage === pages.slice(0)[0] - 1,
-    [currentPage, pages],
-  );
+  const isRangeLast = currentPage === pages[pages.length - 1];
+  const isRangePrevious = currentPage === pages.slice(0)[0] - 1;
 
   useEffect(() => {
     // eslint-disable-next-line default-case
