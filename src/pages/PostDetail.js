@@ -4,9 +4,7 @@ import {Box, Title, Text} from '../components/atoms';
 import axios from 'axios';
 import {useParams} from 'react-router-dom';
 import Tag from '../components/posts/Tag';
-import ReactMarkdown from 'react-markdown';
-import CodeBlock from '../components/posts/CodeBlock';
-import {markdownStyle} from '../assets/markdown';
+import MarkdownBlock from '../components/posts/MarkdownBlock';
 
 const PostDetail = () => {
   const {postId} = useParams();
@@ -59,13 +57,7 @@ const PostDetail = () => {
             ))}
           </Box>
         </Box>
-        <div css={markdownStyle}>
-          <ReactMarkdown
-            components={{code: CodeBlock}}
-            className="markdown-style">
-            {item?.body}
-          </ReactMarkdown>
-        </div>
+        <MarkdownBlock markdown={item?.body} />
       </Box>
     </Box>
   );

@@ -1,6 +1,62 @@
 import {css} from '@emotion/react';
+import ReactMarkdown from 'react-markdown';
+import {Prism as SyntaxHighlighter} from 'react-syntax-highlighter';
+import {vscDarkPlus} from 'react-syntax-highlighter/dist/esm/styles/prism';
 
-export const markdownStyle = css`
+const MarkdownBlock = ({markdown}) => {
+  return (
+    <div css={markdownStyle}>
+      <ReactMarkdown
+        components={{
+          code: codeBlockProps => {
+            const {inline, className, children, ...codeProps} = codeBlockProps;
+            const match = /language-(\w+)/.exec(className || '');
+
+            return (
+              <div css={codeBlock}>
+                {!inline && match ? (
+                  <SyntaxHighlighter
+                    style={vscDarkPlus}
+                    language={match[1]}
+                    PreTag="div"
+                    {...codeProps}>
+                    {String(children).replace(/\n$/, '')}
+                  </SyntaxHighlighter>
+                ) : (
+                  <code css={codeSpans} className={className} {...codeProps}>
+                    {children}
+                  </code>
+                )}
+              </div>
+            );
+          },
+        }}
+        className="markdown-style">
+        {markdown}
+      </ReactMarkdown>
+    </div>
+  );
+};
+
+export default MarkdownBlock;
+
+const codeBlock = css`
+  margin: 24px 0;
+`;
+
+const codeSpans = css`
+  font-size: 0.9em;
+  line-height: 1.5;
+  --tw-text-opacity: 1;
+  color: rgb(220 38 38 / var(--tw-text-opacity));
+  padding: 0.25rem 0.5rem;
+  margin: 0 0.25rem;
+  --tw-bg-opacity: 1;
+  background-color: rgb(231 229 228 / var(--tw-bg-opacity));
+  border-radius: 4px;
+`;
+
+const markdownStyle = css`
   div {
     line-height: 150%;
   }
@@ -57,7 +113,7 @@ export const markdownStyle = css`
 
   img {
     max-width: 100%;
-    margin: 16px 16px 24px;
+    margin: 16px 0 24px;
   }
 
   h1,
