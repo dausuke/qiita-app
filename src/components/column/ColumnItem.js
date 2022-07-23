@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import {useState, useEffect} from 'react';
 import {css} from '@emotion/react';
 import {Box} from '../atoms';
@@ -5,6 +6,7 @@ import SearchBar from '../common/SeachBar';
 import PostItem from '../posts/PostItem';
 import axios from 'axios';
 import MinusIcon from '../../assets/icon/minus.svg';
+import Pagination from '../common/Pagination';
 
 const ColumnItem = props => {
   const [posts, setPosts] = useState([]);
@@ -26,7 +28,7 @@ const ColumnItem = props => {
         params,
       });
 
-      setPosts(response.data);
+      setPosts([...posts, ...response.data]);
     } catch (e) {
       console.log(e);
     }
@@ -38,7 +40,6 @@ const ColumnItem = props => {
 
   useEffect(() => {
     fetchPosts();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page, props.query]);
 
   return (
@@ -59,6 +60,13 @@ const ColumnItem = props => {
         {posts.map((post, index) => (
           <PostItem key={index} post={post} margin={32} />
         ))}
+        <Pagination
+          currentPage={page}
+          isInfinite
+          onNext={() => setPage(page => page + 1)}
+          onPrevious={() => setPage(page => page - 1)}
+          onPagePress={page => setPage(page)}
+        />
       </Box>
     </Box>
   );
