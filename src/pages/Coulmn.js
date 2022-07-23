@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import {useState, useEffect} from 'react';
 import {css} from '@emotion/react';
 import {Box} from '../components/atoms';
@@ -52,16 +53,21 @@ const Column = () => {
     }
   };
 
-  useEffect(() => {
-    getDocs(columnColRef)
-      .then(querySnapshot => {
-        const newColmns = querySnapshot.docs.map(doc => {
-          return {columnId: doc.id, query: doc.data().query};
-        });
+  const getColumnDocs = async () => {
+    try {
+      const querySnapshot = await getDocs(columnColRef);
+      const newColmns = querySnapshot.docs.map(doc => {
+        return {columnId: doc.id, query: doc.data().query};
+      });
 
-        setColumns(newColmns);
-      })
-      .catch(e => console.log(e));
+      setColumns(newColmns);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  useEffect(() => {
+    getColumnDocs()
   }, []);
 
   return (

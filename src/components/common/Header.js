@@ -1,13 +1,32 @@
+import {useState, useEffect} from 'react';
 import {css} from '@emotion/react';
 import {Box, Title, Text} from '../atoms';
-import {NavLink} from 'react-router-dom';
+import {NavLink, useNavigate} from 'react-router-dom';
+import {auth, isLoggedin} from '../../firebase';
 
 const Header = () => {
+  const [isLogin, setIsLogin] = useState();
+  const navigate = useNavigate();
   const ROUTES = [
     {path: '/', name: 'ホーム'},
     {path: 'column', name: 'カラム'},
     // {path: 'browser', name: 'ブラウザ'},
   ];
+
+  const logout = async () => {
+    if (window.confirm('ログアウトしますか？')) {
+      await auth.signOut();
+      navigate('/auth');
+    }
+  };
+
+  useEffect(() => {
+    isLoggedin().then(val => {
+      setIsLogin(val);
+      console.log();
+    });
+    console.log();
+  }, []);
 
   return (
     <header css={header}>
@@ -28,6 +47,13 @@ const Header = () => {
             </NavLink>
           ))}
         </Box>
+        {isLogin && (
+          <Box>
+            <Text css={logoutText} onClick={logout}>
+              ログアウト
+            </Text>
+          </Box>
+        )}
       </Box>
     </header>
   );
@@ -85,4 +111,10 @@ const border = css`
     height: 3px;
     width: 100%;
   }
+`;
+
+const logoutText = css`
+  color: #fff;
+  font-weight: 700;
+  cursor: pointer;
 `;

@@ -1,6 +1,11 @@
 import {initializeApp} from 'firebase/app';
 import {getFirestore, collection} from 'firebase/firestore';
-import {getAuth} from 'firebase/auth';
+import {
+  getAuth,
+  GoogleAuthProvider,
+  EmailAuthProvider,
+  onAuthStateChanged,
+} from 'firebase/auth';
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_FIREBASE_APIKEY,
@@ -13,7 +18,21 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 
-export const db = getFirestore(app);
 export const auth = getAuth();
+export const uiConfig = {
+  signInFlow: 'popup',
+  signInSuccessUrl: '/',
+  signInOptions: [
+    EmailAuthProvider.PROVIDER_ID,
+    GoogleAuthProvider.PROVIDER_ID,
+  ],
+};
 
+export const isLoggedin = () => {
+  return new Promise(resolve => {
+    onAuthStateChanged(auth, user => resolve(user ? true : false));
+  });
+};
+
+export const db = getFirestore(app);
 export const columnColRef = collection(db, 'columns');
