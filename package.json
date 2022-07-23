@@ -2,7 +2,7 @@
   "name": "qiita-app",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://qiita-app-alpha.vercel.app/",
+  "homepage": "https://qiita-app-v2.vercel.app/",
   "dependencies": {
     "@craco/craco": "^6.4.5",
     "@emotion/react": "^11.9.3",
