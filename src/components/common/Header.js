@@ -6,7 +6,7 @@ const Header = () => {
   const ROUTES = [
     {path: '/', name: 'ホーム'},
     {path: 'column', name: 'カラム'},
-    {path: 'browser', name: 'ブラウザ'},
+    // {path: 'browser', name: 'ブラウザ'},
   ];
 
   return (
