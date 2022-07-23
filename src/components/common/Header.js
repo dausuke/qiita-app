@@ -8,7 +8,7 @@ const Header = () => {
     {path: 'column', name: 'カラム'},
     {path: 'browser', name: 'ブラウザ'},
   ];
-  
+
   return (
     <header css={header}>
       <Box css={contaienr}>
@@ -20,7 +20,9 @@ const Header = () => {
             <NavLink to={route.path} key={index}>
               {({isActive}) => (
                 <Box css={[naviItem, isActive && border]} col>
-                  <Text css={[naviText, isActive && activeText]}>{route.name}</Text>
+                  <Text css={[naviText, isActive && activeText]}>
+                    {route.name}
+                  </Text>
                 </Box>
               )}
             </NavLink>
