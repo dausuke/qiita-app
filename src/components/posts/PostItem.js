@@ -6,11 +6,11 @@ import Tag from './Tag';
 
 const PostItem = props => {
   const {post} = props;
-  
+
   return (
-    <Link to={`post/${post.id}`}>
+    <Link to={`/post/${post.id}`}>
       <Box css={[contaienr, {marginBottom: props.margin}]} col>
-        <Title>{post.title}</Title>
+        <Title css={postTitle}>{post.title}</Title>
         <Box css={dateWrapper}>
           <Text fontSize={12} css={dateText}>
             {dayjs(post.created_at).format('YYYY年MM月DD日 HH:mm:ss')}
@@ -34,6 +34,10 @@ const contaienr = css`
   background-color: #fff;
 `;
 
+const postTitle = css`
+  word-break: break-all;
+`;
+
 const dateWrapper = css`
   margin: 8px 0;
 `;
@@ -44,5 +48,6 @@ const dateText = css`
 
 const tagWrapper = css`
   flex-wrap: wrap;
+  gap: 8px;
   margin-top: 8px;
 `;

@@ -16,7 +16,6 @@ export default Tag;
 const tagItem = css`
   background-color: #bbbabd;
   padding: 4px 8px;
-  margin-left: 8px;
   border-radius: 6px;
 `;
 
