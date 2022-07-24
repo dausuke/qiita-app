@@ -28,7 +28,9 @@ const ColumnItem = props => {
         params,
       });
 
-      setPosts([...posts, ...response.data]);
+      page === 1
+        ? setPosts(response.data)
+        : setPosts([...posts, ...response.data]);
     } catch (e) {
       console.log(e);
     }
@@ -36,6 +38,7 @@ const ColumnItem = props => {
 
   const onSearch = value => {
     props.onSearch(props.id, value);
+    setPage(1);
   };
 
   useEffect(() => {
@@ -61,13 +64,15 @@ const ColumnItem = props => {
         {posts.map((post, index) => (
           <PostItem key={index} post={post} margin={32} />
         ))}
-        <Pagination
-          currentPage={page}
-          isInfinite
-          onNext={() => setPage(page => page + 1)}
-          onPrevious={() => setPage(page => page - 1)}
-          onPagePress={page => setPage(page)}
-        />
+        {!!posts.length && (
+          <Pagination
+            currentPage={page}
+            isInfinite
+            onNext={() => setPage(page => page + 1)}
+            onPrevious={() => setPage(page => page - 1)}
+            onPagePress={page => setPage(page)}
+          />
+        )}
       </Box>
     </Box>
   );

@@ -14,10 +14,10 @@ const Header = () => {
       path: 'column',
       icon: {inActive: Icon.ColumnIcon, active: Icon.ColumnIconActive},
     },
-    {
-      path: 'browser',
-      icon: {inActive: Icon.BrowserIcon, active: Icon.BrowserIconActive},
-    },
+    // {
+    //   path: 'browser',
+    //   icon: {inActive: Icon.BrowserIcon, active: Icon.BrowserIconActive},
+    // },
   ];
 
   const logout = async () => {
