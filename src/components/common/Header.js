@@ -3,14 +3,21 @@ import {css} from '@emotion/react';
 import {Box, Title, Text} from '../atoms';
 import {NavLink, useNavigate} from 'react-router-dom';
 import {auth, isLoggedin} from '../../firebase';
+import * as Icon from '../../assets/icon';
 
 const Header = () => {
   const [isLogin, setIsLogin] = useState();
   const navigate = useNavigate();
   const ROUTES = [
-    {path: '/', name: 'ホーム'},
-    {path: 'column', name: 'カラム'},
-    // {path: 'browser', name: 'ブラウザ'},
+    {path: '/', icon: {inActive: Icon.HomeIcon, active: Icon.HomeIconActive}},
+    {
+      path: 'column',
+      icon: {inActive: Icon.ColumnIcon, active: Icon.ColumnIconActive},
+    },
+    {
+      path: 'browser',
+      icon: {inActive: Icon.BrowserIcon, active: Icon.BrowserIconActive},
+    },
   ];
 
   const logout = async () => {
@@ -39,9 +46,11 @@ const Header = () => {
             <NavLink to={route.path} key={index}>
               {({isActive}) => (
                 <Box css={[naviItem, isActive && border]} col>
-                  <Text css={[naviText, isActive && activeText]}>
-                    {route.name}
-                  </Text>
+                  <img
+                    src={isActive ? route.icon.active : route.icon.inActive}
+                    css={naviIcon}
+                    alt=""
+                  />
                 </Box>
               )}
             </NavLink>
@@ -88,18 +97,11 @@ const navi = css`
 
 const naviItem = css`
   justify-content: center;
-  width: 80px;
+  width: 40px;
 `;
 
-const naviText = css`
-  text-align: center;
-  color: #ffffff80;
-  font-weight: bold;
+const naviIcon = css`
   margin-bottom: 4px;
-`;
-
-const activeText = css`
-  color: #fff;
 `;
 
 const border = css`

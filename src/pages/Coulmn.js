@@ -2,7 +2,7 @@
 import {useState, useEffect} from 'react';
 import {css} from '@emotion/react';
 import {Box} from '../components/atoms';
-import PlusIcon from '../assets/icon/plus.svg';
+import {PlusIcon} from '../assets/icon';
 import ColumnItem from '../components/column/ColumnItem';
 import {columnColRef} from '../firebase';
 import {doc, addDoc, deleteDoc, updateDoc, getDocs} from 'firebase/firestore';
@@ -104,6 +104,7 @@ const columnWrap = css`
 
 const plusIcon = css`
   position: absolute;
+  width: 40px;
   margin-top: 16px;
   right: -80px;
 `;

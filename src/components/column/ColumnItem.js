@@ -5,7 +5,7 @@ import {Box} from '../atoms';
 import SearchBar from '../common/SeachBar';
 import PostItem from '../posts/PostItem';
 import axios from 'axios';
-import MinusIcon from '../../assets/icon/minus.svg';
+import {MinusIcon} from '../../assets/icon';
 import Pagination from '../common/Pagination';
 
 const ColumnItem = props => {
@@ -52,6 +52,7 @@ const ColumnItem = props => {
         />
         <img
           src={MinusIcon}
+          css={icon}
           onClick={() => props.onIconClick(props.id)}
           alt=""
         />
@@ -94,4 +95,8 @@ const scroll = css`
 
 const input = css`
   width: 240px;
+`;
+
+const icon = css`
+  width: 40px;
 `;
