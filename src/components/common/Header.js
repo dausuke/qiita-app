@@ -2,8 +2,9 @@ import {useState, useEffect} from 'react';
 import {css} from '@emotion/react';
 import {Box, Title, Text} from '../atoms';
 import {NavLink, useNavigate} from 'react-router-dom';
-import {auth, isLoggedin} from '../../firebase';
+import {auth} from '../../firebase';
 import * as Icon from '../../assets/icon';
+import {onAuthStateChanged} from 'firebase/auth';
 
 const Header = () => {
   const [isLogin, setIsLogin] = useState();
@@ -28,11 +29,10 @@ const Header = () => {
   };
 
   useEffect(() => {
-    isLoggedin().then(val => {
-      setIsLogin(val);
-      console.log();
+    const unsubscribe = onAuthStateChanged(auth, user => {
+      user ? setIsLogin(true) : setIsLogin(false);
     });
-    console.log();
+    return () => unsubscribe();
   }, []);
 
   return (

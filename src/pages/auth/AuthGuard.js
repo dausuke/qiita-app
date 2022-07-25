@@ -8,7 +8,7 @@ const AuthGuard = props => {
   const [isLogin, setIsLogin] = useState();
 
   useEffect(() => {
-    isLoggedin().then(val => setIsLogin(val));
+    isLoggedin().then(val => setIsLogin(!!val));
   }, []);
 
   return isLogin === false ? (

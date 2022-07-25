@@ -8,9 +8,11 @@ import axios from 'axios';
 import {MinusIcon} from '../../assets/icon';
 import Pagination from '../common/Pagination';
 
-const ColumnItem = props => {
+const ColumnItem = ({maxCount = 3, ...props}) => {
   const [posts, setPosts] = useState([]);
   const [page, setPage] = useState(1);
+
+  const width = 1080 / maxCount - 64 / maxCount;
 
   const fetchPosts = async () => {
     try {
@@ -46,7 +48,7 @@ const ColumnItem = props => {
   }, [page, props.query]);
 
   return (
-    <Box css={container} col>
+    <Box css={[container, {width}]} col>
       <Box css={searchWrap}>
         <SearchBar
           onEnterPress={onSearch}
@@ -84,7 +86,6 @@ const container = css`
   flex: 1;
   padding: 16px;
   align-items: center;
-  width: calc(1080px / 3 - 64px / 3);
 `;
 
 const searchWrap = css`

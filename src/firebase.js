@@ -23,14 +23,14 @@ export const uiConfig = {
   signInFlow: 'popup',
   signInSuccessUrl: '/',
   signInOptions: [
-    EmailAuthProvider.PROVIDER_ID,
+    {provider: EmailAuthProvider.PROVIDER_ID, requireDisplayName: false},
     GoogleAuthProvider.PROVIDER_ID,
   ],
 };
 
 export const isLoggedin = () => {
   return new Promise(resolve => {
-    onAuthStateChanged(auth, user => resolve(user ? true : false));
+    onAuthStateChanged(auth, user => resolve(user || false));
   });
 };
 

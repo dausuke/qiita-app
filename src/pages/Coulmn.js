@@ -4,8 +4,19 @@ import {css} from '@emotion/react';
 import {Box} from '../components/atoms';
 import {PlusIcon} from '../assets/icon';
 import ColumnItem from '../components/column/ColumnItem';
-import {columnColRef} from '../firebase';
-import {doc, addDoc, deleteDoc, updateDoc, getDocs} from 'firebase/firestore';
+import {columnColRef, auth} from '../firebase';
+import {
+  doc,
+  addDoc,
+  deleteDoc,
+  updateDoc,
+  getDocs,
+  serverTimestamp,
+  query,
+  orderBy,
+  where,
+} from 'firebase/firestore';
+import {onAuthStateChanged} from 'firebase/auth';
 
 const Column = () => {
   const MAX_COLUMN_COUNT = 3;
@@ -14,11 +25,15 @@ const Column = () => {
   const addColumn = async () => {
     try {
       if (columns.length < MAX_COLUMN_COUNT) {
-        const colmnRef = await addDoc(columnColRef, {
+        const user = auth.currentUser;
+        const data = {
+          user_id: user.uid,
           query: '',
-        });
+          created_at: serverTimestamp(),
+        };
+        const colmnRef = await addDoc(columnColRef, data);
 
-        setColumns([...columns, {columnId: colmnRef.id, query: ''}]);
+        setColumns([...columns, {...data, columnId: colmnRef.id}]);
       }
     } catch (e) {
       console.log(e);
@@ -53,11 +68,26 @@ const Column = () => {
     }
   };
 
-  const getColumnDocs = async () => {
+  // 引数を追加
+  const getColumnDocs = async user => {
     try {
-      const querySnapshot = await getDocs(columnColRef);
+      const q = query(
+        columnColRef,
+        // 追加
+        where('user_id', '==', user.uid),
+        orderBy('created_at', 'asc'),
+      );
+      const querySnapshot = await getDocs(q);
+
       const newColmns = querySnapshot.docs.map(doc => {
-        return {columnId: doc.id, query: doc.data().query};
+        const docData = doc.data();
+
+        return {
+          columnId: doc.id,
+          user_id: docData.user_id,
+          query: docData.query,
+          created_at: docData.created_at,
+        };
       });
 
       setColumns(newColmns);
@@ -67,7 +97,10 @@ const Column = () => {
   };
 
   useEffect(() => {
-    getColumnDocs()
+    const unsubscribe = onAuthStateChanged(auth, user => {
+      user && getColumnDocs(user);
+    });
+    return () => unsubscribe();
   }, []);
 
   return (
