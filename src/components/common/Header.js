@@ -3,21 +3,21 @@ import {css} from '@emotion/react';
 import {Box, Title, Text} from '../atoms';
 import {NavLink, useNavigate} from 'react-router-dom';
 import {auth} from '../../firebase';
-import * as Icon from '../../assets/icon';
+import * as NaviIcon from '../../assets/icon/navi';
 import {onAuthStateChanged} from 'firebase/auth';
 
 const Header = () => {
   const [isLogin, setIsLogin] = useState();
   const navigate = useNavigate();
   const ROUTES = [
-    {path: '/', icon: {inActive: Icon.HomeIcon, active: Icon.HomeIconActive}},
+    {path: '/', icon: {inActive: NaviIcon.HomeIcon, active: NaviIcon.HomeIconActive}},
     {
       path: 'column',
-      icon: {inActive: Icon.ColumnIcon, active: Icon.ColumnIconActive},
+      icon: {inActive: NaviIcon.ColumnIcon, active: NaviIcon.ColumnIconActive},
     },
     // {
-    //   path: 'browser',
-    //   icon: {inActive: Icon.BrowserIcon, active: Icon.BrowserIconActive},
+    //   path: 'bookmark',
+    //   icon: {inActive: NaviIcon.BookmarkICon, active: NaviIcon.BookmarkIconActive},
     // },
   ];
 
