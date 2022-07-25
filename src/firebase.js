@@ -1,5 +1,5 @@
 import {initializeApp} from 'firebase/app';
-import {getFirestore, collection} from 'firebase/firestore';
+import {getFirestore} from 'firebase/firestore';
 import {
   getAuth,
   GoogleAuthProvider,
@@ -35,4 +35,3 @@ export const isLoggedin = () => {
 };
 
 export const db = getFirestore(app);
-export const columnColRef = collection(db, 'columns');

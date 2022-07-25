@@ -4,8 +4,9 @@ import {css} from '@emotion/react';
 import {Box} from '../components/atoms';
 import {PlusIcon} from '../assets/icon';
 import ColumnItem from '../components/column/ColumnItem';
-import {columnColRef, auth} from '../firebase';
+import {db, auth} from '../firebase';
 import {
+  collection,
   doc,
   addDoc,
   deleteDoc,
@@ -14,24 +15,28 @@ import {
   serverTimestamp,
   query,
   orderBy,
-  where,
 } from 'firebase/firestore';
 import {onAuthStateChanged} from 'firebase/auth';
 
 const Column = () => {
   const MAX_COLUMN_COUNT = 3;
   const [columns, setColumns] = useState([]);
+  const [user, setUser] = useState(null);
 
   const addColumn = async () => {
     try {
       if (columns.length < MAX_COLUMN_COUNT) {
-        const user = auth.currentUser;
         const data = {
-          user_id: user.uid,
           query: '',
           created_at: serverTimestamp(),
         };
-        const colmnRef = await addDoc(columnColRef, data);
+        const columnCollectionRef = collection(
+          db,
+          'users',
+          user.uid,
+          'columns',
+        );
+        const colmnRef = await addDoc(columnCollectionRef, data);
 
         setColumns([...columns, {...data, columnId: colmnRef.id}]);
       }
@@ -43,7 +48,13 @@ const Column = () => {
   const removeColumn = async id => {
     try {
       if (columns.length) {
-        const docRef = doc(columnColRef, id);
+        const columnCollectionRef = collection(
+          db,
+          'users',
+          user.uid,
+          'columns',
+        );
+        const docRef = doc(columnCollectionRef, id);
         await deleteDoc(docRef);
 
         const removed = columns.filter(col => col.columnId !== id);
@@ -56,7 +67,8 @@ const Column = () => {
 
   const handleSearch = async (id, query) => {
     try {
-      const docRef = doc(columnColRef, id);
+      const columnCollectionRef = collection(db, 'users', user.uid, 'columns');
+      const docRef = doc(columnCollectionRef, id);
       await updateDoc(docRef, {query});
 
       const newColmns = [...columns];
@@ -69,14 +81,11 @@ const Column = () => {
   };
 
   // 引数を追加
-  const getColumnDocs = async user => {
+  const getColumnDocs = async userId => {
     try {
-      const q = query(
-        columnColRef,
-        // 追加
-        where('user_id', '==', user.uid),
-        orderBy('created_at', 'asc'),
-      );
+      // 引数で受け取ったuserIdをコレクションの参照に渡す
+      const columnCollectionRef = collection(db, 'users', userId, 'columns');
+      const q = query(columnCollectionRef, orderBy('created_at', 'asc'));
       const querySnapshot = await getDocs(q);
 
       const newColmns = querySnapshot.docs.map(doc => {
@@ -98,7 +107,10 @@ const Column = () => {
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, user => {
-      user && getColumnDocs(user);
+      if (user) {
+        setUser(user);
+        getColumnDocs(user.uid);
+      }
     });
     return () => unsubscribe();
   }, []);
