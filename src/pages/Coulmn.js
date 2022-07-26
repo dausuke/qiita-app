@@ -125,6 +125,7 @@ const Column = () => {
             query={val.query}
             onSearch={handleSearch}
             onIconClick={removeColumn}
+            maxCount={MAX_COLUMN_COUNT}
           />
         ))}
       </Box>

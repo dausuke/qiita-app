@@ -8,7 +8,8 @@ import axios from 'axios';
 import {MinusIcon} from '../../assets/icon';
 import Pagination from '../common/Pagination';
 
-const ColumnItem = ({maxCount = 3, ...props}) => {
+const ColumnItem = props => {
+  const {maxCount, query, id, onSearch, onIconClick} = props;
   const [posts, setPosts] = useState([]);
   const [page, setPage] = useState(1);
 
@@ -19,7 +20,7 @@ const ColumnItem = ({maxCount = 3, ...props}) => {
       const params = {
         per_page: '20',
         page,
-        query: props.query,
+        query: query,
       };
       const headers = {
         Authorization: `Bearer ${process.env.REACT_APP_QIITA_KEY}`,
@@ -38,27 +39,23 @@ const ColumnItem = ({maxCount = 3, ...props}) => {
     }
   };
 
-  const onSearch = value => {
-    props.onSearch(props.id, value);
+  const handleEnterPress = value => {
+    onSearch(id, value);
     setPage(1);
   };
 
   useEffect(() => {
     fetchPosts();
-  }, [page, props.query]);
+  }, [page, query]);
 
   return (
     <Box css={[container, {width}]} col>
       <Box css={searchWrap}>
-        <SearchBar
-          onEnterPress={onSearch}
-          inputStyle={input}
-          value={props.query}
-        />
+        <SearchBar onEnterPress={handleEnterPress} inputStyle={input} value={query} />
         <img
           src={MinusIcon}
           css={icon}
-          onClick={() => props.onIconClick(props.id)}
+          onClick={() => onIconClick(id)}
           alt=""
         />
       </Box>

@@ -47,8 +47,8 @@ const Home = () => {
             <SearchBar onEnterPress={value => setQuery(value)} />
             <Pagination
               currentPage={page}
-              onNext={() => setPage(page => page + 1)}
-              onPrevious={() => setPage(page => page - 1)}
+              onNext={() => setPage(page + 1)}
+              onPrevious={() => setPage(page - 1)}
               onPagePress={page => setPage(page)}
             />
           </Box>
