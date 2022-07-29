@@ -3,6 +3,7 @@ import {Global, css} from '@emotion/react';
 import {Outlet} from 'react-router-dom';
 import {Box} from '../atoms';
 import Header from '../common/Header';
+import {mq} from '../../assets/style'
 
 const Base = () => {
   return (
@@ -37,4 +38,8 @@ const globalStyle = css`
 const container = css`
   max-width: 1080px;
   margin: 0 auto;
+  ${mq['tablet']} {
+    max-width: none;
+    margin: 0 24px;
+  }
 `;

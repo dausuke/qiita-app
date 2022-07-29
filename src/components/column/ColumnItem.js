@@ -7,13 +7,19 @@ import PostItem from '../posts/PostItem';
 import axios from 'axios';
 import {MinusIcon} from '../../assets/icon';
 import Pagination from '../common/Pagination';
+import {useWindowDimensions} from '../../assets/style';
 
 const ColumnItem = props => {
   const {maxCount, query, id, onSearch, onIconClick} = props;
   const [posts, setPosts] = useState([]);
   const [page, setPage] = useState(1);
+  const currentWidth = useWindowDimensions();
+  console.log(currentWidth);
 
-  const width = 1080 / maxCount - 64 / maxCount;
+  const width =
+    currentWidth > 1080
+      ? 1080 / maxCount - 64 / maxCount
+      : (currentWidth - 48) / maxCount - 16 / maxCount;
 
   const fetchPosts = async () => {
     try {
@@ -51,7 +57,11 @@ const ColumnItem = props => {
   return (
     <Box css={[container, {width}]} col>
       <Box css={searchWrap}>
-        <SearchBar onEnterPress={handleEnterPress} inputStyle={input} value={query} />
+        <SearchBar
+          onEnterPress={handleEnterPress}
+          inputStyle={input}
+          value={query}
+        />
         <img
           src={MinusIcon}
           css={icon}

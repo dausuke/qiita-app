@@ -5,6 +5,7 @@ import {NavLink, useNavigate} from 'react-router-dom';
 import {auth} from '../../firebase';
 import * as NaviIcon from '../../assets/icon/navi';
 import {onAuthStateChanged} from 'firebase/auth';
+import {mq} from '../../assets/style'
 
 const Header = () => {
   const [isLogin, setIsLogin] = useState();
@@ -83,6 +84,10 @@ const contaienr = css`
   max-width: 1400px;
   margin: 0 auto;
   padding: 20px 0;
+  ${mq['tablet']} {
+    max-width: none;
+    margin: 0 24px;
+  }
 `;
 
 const logo = css`

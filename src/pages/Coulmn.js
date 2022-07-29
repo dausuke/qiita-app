@@ -17,9 +17,10 @@ import {
   orderBy,
 } from 'firebase/firestore';
 import {onAuthStateChanged} from 'firebase/auth';
+import {mq} from '../assets/style';
 
 const Column = () => {
-  const MAX_COLUMN_COUNT = 3;
+  const MAX_COLUMN_COUNT = 2;
   const [columns, setColumns] = useState([]);
   const [user, setUser] = useState(null);
 
@@ -146,6 +147,9 @@ const contaienr = css`
 
 const columnWrap = css`
   column-gap: 32px;
+  ${mq['tablet']} {
+    column-gap: 16px;
+  }
 `;
 
 const plusIcon = css`
@@ -153,4 +157,7 @@ const plusIcon = css`
   width: 40px;
   margin-top: 16px;
   right: -80px;
+  ${mq['tablet']} {
+    right: 0;
+  }
 `;
