@@ -20,7 +20,7 @@ import {onAuthStateChanged} from 'firebase/auth';
 import {mq} from '../assets/style';
 
 const Column = () => {
-  const MAX_COLUMN_COUNT = 2;
+  const MAX_COLUMN_COUNT = 3;
   const [columns, setColumns] = useState([]);
   const [user, setUser] = useState(null);
 
@@ -94,7 +94,6 @@ const Column = () => {
 
         return {
           columnId: doc.id,
-          user_id: docData.user_id,
           query: docData.query,
           created_at: docData.created_at,
         };

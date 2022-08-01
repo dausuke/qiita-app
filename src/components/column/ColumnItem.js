@@ -14,7 +14,6 @@ const ColumnItem = props => {
   const [posts, setPosts] = useState([]);
   const [page, setPage] = useState(1);
   const currentWidth = useWindowDimensions();
-  console.log(currentWidth);
 
   const width =
     currentWidth > 1080
