@@ -4,7 +4,14 @@ import {Box, Text} from '../atoms';
 import {css} from '@emotion/react';
 
 const Pagination = props => {
-  const {range = 5, currentPage, onNext, onPrevious, onPagePress} = props;
+  const {
+    range = 5,
+    currentPage,
+    onNext,
+    onPrevious,
+    onPagePress,
+    isInfinite,
+  } = props;
   const [pages, setPages] = useState([]);
 
   const isRangeLast = currentPage === pages[pages.length - 1];
@@ -31,46 +38,54 @@ const Pagination = props => {
 
   return (
     <Box css={container}>
-      {currentPage !== 1 && (
-        <Box css={pointerWrap} onClick={onPrevious}>
-          <Text css={pointer}>前へ</Text>
-        </Box>
-      )}
-      <Box css={pageWrap}>
-        {currentPage >= 5 && (
-          <>
-            <Box
-              css={[pointerWrap, currentPage === 1 && activePointer]}
-              onClick={() => onPagePress(1)}>
-              <Text
-                fontSize={14}
-                css={[pointer, currentPage === 1 && activePage]}>
-                1
-              </Text>
-            </Box>
-            <Text>...</Text>
-          </>
-        )}
-        {pages.map(page => {
-          return (
-            <Box
-              key={page}
-              css={[pointerWrap, currentPage === page && activePointer]}
-              onClick={() => onPagePress(page)}>
-              <Text
-                key={page}
-                fontSize={14}
-                css={[pointer, currentPage === page && activePage]}>
-                {page}
-              </Text>
-            </Box>
-          );
-        })}
-      </Box>
-      {currentPage !== 100 && (
+      {isInfinite ? (
         <Box css={pointerWrap} onClick={onNext}>
-          <Text css={pointer}>次へ</Text>
+          <Text css={pointer}>もっと見る</Text>
         </Box>
+      ) : (
+        <>
+          {currentPage !== 1 && (
+            <Box css={pointerWrap} onClick={onPrevious}>
+              <Text css={pointer}>前へ</Text>
+            </Box>
+          )}
+          <Box css={pageWrap}>
+            {currentPage >= 5 && (
+              <>
+                <Box
+                  css={[pointerWrap, currentPage === 1 && activePointer]}
+                  onClick={() => onPagePress(1)}>
+                  <Text
+                    fontSize={14}
+                    css={[pointer, currentPage === 1 && activePage]}>
+                    1
+                  </Text>
+                </Box>
+                <Text>...</Text>
+              </>
+            )}
+            {pages.map(page => {
+              return (
+                <Box
+                  key={page}
+                  css={[pointerWrap, currentPage === page && activePointer]}
+                  onClick={() => onPagePress(page)}>
+                  <Text
+                    key={page}
+                    fontSize={14}
+                    css={[pointer, currentPage === page && activePage]}>
+                    {page}
+                  </Text>
+                </Box>
+              );
+            })}
+          </Box>
+          {currentPage !== 100 && (
+            <Box css={pointerWrap} onClick={onNext}>
+              <Text css={pointer}>次へ</Text>
+            </Box>
+          )}
+        </>
       )}
     </Box>
   );

@@ -100,5 +100,6 @@ const linkText = css`
 
 const tagWrapper = css`
   flex-wrap: wrap;
+  gap: 8px;
   margin-top: 16px;
 `;
